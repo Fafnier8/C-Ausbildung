@@ -91,6 +91,8 @@ Hinweis: "Google is your friend", Siehe auch STL_1_string.cpp
          Die Behandlung von ungültigen Werten kommt später. 
 		 Für diese Aufgabe nur gültige Zahlen eingeben.
 
+ 
+
 Aufgabe 05j)
 ------------
 Gegeben ist ein std::string meinString {"Dies ist eine $$$ Welt"};
@@ -104,6 +106,7 @@ Beispielaufruf:
  
  Geben Sie mit cout zunächst meinString aus und in der nächsten Zeile das Ergebnis der Funktion.
  
+
 
 Aufgabe 05k)
 ----------------
@@ -132,19 +135,86 @@ b) Jetzt sollen alle drei Parameter vom Benutzer eingebeben werden.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> // für strlen
+#include <stdbool.h>
+
+
+
+
+
+
+//search function to find a row of characters. Will also search if a string is a part of another word.
+
+
+int finde_string(char text[], char string[]){
+    int fundstelle;
+    for(int i = 0; i<strlen(text); ++i){
+        if(string[0] == text[i]){
+            fundstelle = i+1;
+            int temp_found_character = 1;
+            while(temp_found_character != strlen(string)){
+                if(string[temp_found_character] != text[i+1]){
+                    break;    
+                }
+                ++i;
+                ++temp_found_character;
+            }
+            if(temp_found_character == strlen(string)){
+                printf("Der String %s wurde in dem Text an der %d. Stelle gefunden.\n", string, fundstelle);
+                return fundstelle;
+            }
+        }
+        
+    }
+    printf("Der String %s wurde in dem Text nicht gefunden.\n", string);
+    return -1;
+}
+
+
+void add_word(char text[], char word_to_add[], char word_after_added_word[]){
+    char temp[strlen(text)];
+    strcat(temp, text);   
+    int string_number_for_adding = finde_string(text, word_after_added_word)-1 ; 
+    if(string_number_for_adding == -2){
+        printf("Das Wort nach dem hinzuzufügenden existiert nicht.");
+        return;
+    }
+
+    return;
+}
+
+//function that counts a certain character and looks if it appears a certain number of times
+
+
+bool pruefeZeichen(char string[], char zeichen, unsigned int anzahl){
+    int zeichenanzahl = 0;
+    for(int i = 0; i < strlen(string); ++i){
+        if(string[i] == zeichen){
+            zeichenanzahl += 1;
+        }
+    }
+    if(anzahl == zeichenanzahl) return true;
+    return false;
+}
+
 
 int main(void){
 
-    // Aufgabe 5 a)
+    // Aufgabe 5a)
 
     char hallo[] = "Meine Harley is cool";
     printf("Die Länge vom string hallo ist: %ld \n", strlen(hallo));
     hallo[19] = '\0';
     printf("Die Länge vom string hallo ist nun: %ld \n", strlen(hallo));
 
+    
+    // Aufgabe 5b)
 
     printf("Bitte einen Satz eingeben:\n");
     char eingabe[100];
+
+    //%[^\n] ist ein scanset, was einem sagt, dass erst nach einem \n die Eingabe in 
+    //der Konsole aufhört.  Der * zeigt an, dass der eingelesene \n verworfen wird.
+
     scanf("%[^\n]%*c",&eingabe[0]);
 
 
@@ -155,5 +225,118 @@ int main(void){
     }else{
         printf("Strings sind nicht die Gleichen.\n");
     }
+
+    //Aufgabe 5b2)
+
+    if(strlen(eingabe) >= 18){
+        printf("Das ist das 18. Zeichen von \"eingabe\": %c \n", eingabe[17]);
+    }
+
+    //Aufgabe 5c)
+
+    printf("Das erste Zeichen von \"hallo\" ist: %c \nDas Dritte ist: %c und das Achte ist: %c \n", hallo[0], hallo[2], hallo[7]);
+    
+    hallo[0] = hallo[2] = hallo[7] = '?';
+
+    for(int i = 0; i<strlen(hallo); ++i){
+        printf("%c", hallo[i]);
+    }
+    printf("\n");
+    //Aufgabe 5d)
+    
+    char str5d[] = "Kalli geht in die Schule";
+
+    char verb[] = "geht";
+
+    // Da man  keinen leeren string erschaffen kann, kann aus dem string str5d nichts rausgeschnitten werden. Wenn ein feste Länge bestimmt wird, überlappt der String
+    // verb mit einem andern nämlich mir und verändert sich dadurch.
+    
+
+    //for(int i = 6; i<10; ++i){
+    //    verb[i-6] = str5d[i];
+    //}
+
+
+
+    printf("\n");
+    char mir[] = "Mir";
+
+    char es_gut[] = "es gut";
+
+    char satz[15] = "";
+
+
+
+    strcat(satz, mir);
+    strcat(satz, " ");
+    strcat(satz, verb);
+    strcat(satz, " ");
+    strcat(satz, es_gut);
+
+    for(int i = 0; i<strlen(satz); ++i){
+        printf("%c", satz[i]);
+    }
+    printf("\n");
+
+    // Aufgabe 5e)
+
+    char schule[] = "Schule";
+
+    finde_string(str5d, schule);
+
+    finde_string(str5d, verb);
+
+    char fahren[] = "fahren";
+
+    finde_string(str5d, fahren);
+
+    // Aufgabe 5f)
+
+
+    // Aufgabe 5g)
+
+    char hallo2[] = "Dies ist meine neue Welt";
+
+    char neue[] = "neue";
+
+    
+
+    finde_string(hallo2, neue);
+
+    char meine_heile_welt[] = "Meine heile Welt";
+
+    finde_string(hallo2, meine_heile_welt);
+
+    // Aufgabe 5h)
+
+
+    // Aufgabe 5i)
+
+    char doublestring[10];
+    char *eptr;
+    double wert_von_string;
+
+    printf("Geben Sie eine Kommazahl ein: \n");
+
+    scanf("%[^\n]%*c", &doublestring[0]);
+
+    wert_von_string = strtod(doublestring, &eptr);
+
+    printf("%.2f \n", wert_von_string);
+
+
+
+
+    // Aufgabe 5l)
+
+    char banane[] = "banane";
+
+    bool ergebnis = pruefeZeichen(banane, 'a', 2);
+    if (ergebnis == true)
+        printf("Passt\n");
+    else
+        printf("Passt nicht\n");
+
+
     return 0;
 }
