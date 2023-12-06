@@ -25,21 +25,76 @@ Hinweis: Beachten Sie den in diesem Unterverzeichnis enthaltenen Beispielcode.
 
 
     Erstellen Sie eine Funktion trulli()
-    Diese erhält 3 Strings ala Parameter und liefert einen bool zurück.
+    Diese erhält 3 Strings als Parameter und liefert einen bool zurück.
     Die Aufgabe der Funktion ist, vor jeden String einen Unterstrich zu setzen. 
     Alle 3 geänderten Strings sollen an den Aufrufer zurück geliefert werden.
 */
 
 #include <stdio.h>
 #include <stdint.h>
+#include <cstring>
+
+// function to remove space characters in front und at the end of the word
+// Has a pointer connected to the first element of the string that should be trimmed 
 
 void trim(char* ptrstring){
-    int counter = 0;
+    int counter = 0;  
     char empty_space = ' ';
-    while(*ptrstring == empty_space){
-        counter +=1;
-        ptrstring++;
-        printf("%d\n", counter);
+
+    // While function counts how many white spaces are in front of the word
+
+    while(*(ptrstring + counter) == empty_space){
+        counter += 1;
+    }
+    int begin_word = counter;
+
+    // While function counts where the word ends then and will also end if the word has no empty spaces at the end
+
+    while(*(ptrstring + counter) != empty_space && *(ptrstring + counter) != '\0'){
+        counter += 1;
+    }
+    int end_word = counter;
+
+    // writes the word at the beginning of it's string
+    
+    for(counter = begin_word; counter != end_word; ++counter){
+        *(ptrstring + counter - begin_word) = *(ptrstring + counter);
+    }
+
+    // places a \0 at the end of the word to finish the string after the word
+
+    *(ptrstring + (end_word-begin_word)) = '\0';
+}
+
+void swap(int *number1, int *number2){
+    int temp = *number2;
+    *number2 = *number1;
+    number2 = &temp;
+    *number1 = *number2;
+}
+
+
+void sortArr(int arr[], int size){
+    int temp;
+        for(int i = 0; i < size-1;){
+        if(arr[i]>arr[i+1]){
+            for(;;++i){
+                if(i == size-1){
+                    i = 0;
+                    break;
+                } 
+                
+                if(arr[i]<=arr[i+1]){
+                    i = 0;
+                    break;
+                }
+                temp = arr[i];
+                arr[i] = arr[i+1];
+                arr[i+1] = temp;
+            }
+        } else{
+            i++;
+        }
     }
 }
 
@@ -53,7 +108,38 @@ int main(){
     int* ptr2 = ptr;
     int hh = *ptr2;
     printf("Der Wert der Variable \"hh\" ist: %d\n", hh);
+
+
+    //test for the trim function
+
     char inhalt[] = "     test     ";
+    printf("%s\n", inhalt);
     char *ptrstr = inhalt;
     trim(ptrstr);
+    printf("%s\n", inhalt);
+
+    // Swap numbers exercise
+
+    int test_number1 = 5;
+    int test_number2 = 10;
+
+    int *ptr_test_number1 = &test_number1;
+    int *ptr_test_number2 = &test_number2;
+
+    printf("This is the value of \"test_number1\": %d and this is the value of \"test_number2\": %d\n", test_number1, test_number2);
+
+    swap(ptr_test_number1, ptr_test_number2);
+
+    printf("Now this is the value of \"test_number1\": %d and this is the value of \"test_number2\": %d\n", test_number1, test_number2);
+
+    int arr[]= {6, 2, 5, 100, 30, 42, 69, 1, 69, 12, 6, 7, 2};
+
+    sortArr(arr, (sizeof(arr)/sizeof(arr[0])));
+
+    for(int i = 0; i < (sizeof(arr)/sizeof(arr[0]));++i){
+        printf("%d\t", arr[i]);
+    }
+
+
+    return 0;
 }

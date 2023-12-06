@@ -197,6 +197,25 @@ bool pruefeZeichen(char string[], char zeichen, unsigned int anzahl){
 }
 
 
+// Testfunction
+
+void rectangle(int height, int width){
+    if(height<=0 || width <= 0){
+        printf("ERROR: Please enter valid numbers.\n");
+        return;
+    }
+    
+    
+    for(int i = 0; i  < height* width; ++i){
+        if(i%width==0){ 
+            printf("\n");
+        }
+
+        printf("*");
+    }
+}
+
+
 int main(void){
 
     // Aufgabe 5a)
@@ -337,6 +356,8 @@ int main(void){
     else
         printf("Passt nicht\n");
 
+    rectangle(7, 3);
 
-    return 0;
+
+    return 0; 
 }
