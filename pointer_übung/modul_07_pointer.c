@@ -75,25 +75,25 @@ void swap(int *number1, int *number2){
 
 
 void sortArr(int arr[], int size){
-    int temp;
+    int temp;   // temporary variable for switching values
         for(int i = 0; i < size-1;){
-        if(arr[i]>arr[i+1]){
-            for(;;++i){
-                if(i == size-1){
-                    i = 0;
-                    break;
-                } 
+            if(arr[i]>arr[i+1]){ // looks if number next to it is bigger to sort it
+                for(;;++i){
+                    if(i == size-1){ // reached the end of the array
+                        i = 0;
+                        break;
+                    } 
                 
-                if(arr[i]<=arr[i+1]){
-                    i = 0;
-                    break;
+                    if(arr[i]<=arr[i+1]){ // next number is bigger don't need to switch anymore
+                        i = 0;
+                        break;
+                    }
+                    temp = arr[i];
+                    arr[i] = arr[i+1];
+                    arr[i+1] = temp;
                 }
-                temp = arr[i];
-                arr[i] = arr[i+1];
-                arr[i+1] = temp;
-            }
         } else{
-            i++;
+            i++; // i is raised at the end because otherwise it would otherwise compare if last array number is bigger then the number behind in memory
         }
     }
 }
