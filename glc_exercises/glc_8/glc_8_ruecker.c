@@ -26,6 +26,38 @@ bool sum28(int nums[], int arr_length){
     return false;
 }
 
+/*
+    Coding Bat exercise Array-3 squareUp
+
+    Given n>=0, create an array length n*n with the following pattern, 
+    shown here for n=3 : {0, 0, 1,    0, 2, 1,    3, 2, 1} (spaces added to show the 3 groups).
+
+    squareUp(3) → [0, 0, 1, 0, 2, 1, 3, 2, 1]
+    squareUp(2) → [0, 1, 2, 1]
+    squareUp(4) → [0, 0, 0, 1, 0, 0, 2, 1, 0, 3, 2, 1, 4, 3, 2, 1]
+*/
+void squareUp(unsigned int n){
+    int arr[n*n]={0};
+    int group_counter = 1;
+    for(int i = 1; i<=n; ++i){
+        // the array is filled with 0 so only the numbers need to be added
+        // first the smallest number will be added everywhere it belongs then the next bigger number
+        // n-i causes the second for loop to run one less with one higher iteration of i
+        for(int j = 0; j <= n-i; ++j){
+            // the array fills the numbers from back to front
+            // n*n is the full size of our array. We subtract i to get to the right position wheere the first 
+            // i of the loop will be placed and then go back the size of one group times the iteration value j to
+            // place all numbers at their places
+            arr[((n*n)-i)-n*j] = i;
+        }
+    }
+    
+    for(int i = 0; i < n*n; ++i){
+        printf("%d\n", arr[i]);
+    }
+    
+}
+
 int main(){
     // test of sum28
     int test_arr_sum28_true[] = {2, 3, 2, 4, 2, 7, 8, 2};
@@ -36,4 +68,9 @@ int main(){
     } else {
         printf("False\n");
     }
+
+    // test of squareUp
+    squareUp(5);
+
+    
 }
