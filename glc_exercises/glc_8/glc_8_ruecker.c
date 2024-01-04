@@ -58,6 +58,24 @@ void squareUp(unsigned int n){
     
 }
 
+/*
+    CodingBat exercise String-1 make_abba
+
+    Given two strings, a and b, return the result of putting them together in the order abba, e.g. "Hi" and "Bye" returns "HiByeByeHi".
+
+
+    make_abba('Hi', 'Bye') → 'HiByeByeHi'
+    make_abba('Yo', 'Alice') → 'YoAliceAliceYo'
+    make_abba('What', 'Up') → 'WhatUpUpWhat'
+*/
+
+void make_abba(char str1[], char str2[], char abba[], int abbalen){
+    strcat(abba, str1);
+    strcat(abba, str2);
+    strcat(abba, str2);
+    strcat(abba, str1);
+}
+
 int main(){
     // test of sum28
     int test_arr_sum28_true[] = {2, 3, 2, 4, 2, 7, 8, 2};
@@ -72,5 +90,12 @@ int main(){
     // test of squareUp
     squareUp(5);
 
-    
+
+    //test of make_abba
+    char str1[] = "What";
+    char str2[] = "Up";
+    char abba[((strlen(str1)+ strlen(str2))*2+1)]={'\0'};
+    int abba_len = (strlen(str1)+ strlen(str2))*2+1;
+    make_abba(str1, str2, abba, abba_len);
+    printf("%s\n", abba);
 }
